@@ -1,0 +1,41 @@
+.sidebar-container {
+  width: 20%;
+  height: 100vh;
+  background-color: rgb(53, 53, 53);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1; */
+  /* transition: all 0.5s ease; */
+  /* transform: translateX(-100%); */
+}
+
+.sidebar-inner-container {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  margin-top: 20%;
+}
+
+.sidebar-inner-container h4 {
+  font-size: larger;
+}
+
+.dashboard-white,
+.departments-white,
+.products-white {
+  color: white;
+  opacity: 0.9;
+}
+
+.dashboard-black,
+.departments-black,
+.products-black {
+  color: black;
+}

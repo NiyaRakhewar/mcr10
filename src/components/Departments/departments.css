@@ -1,0 +1,32 @@
+.departments-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  /* background-color: red; */
+}
+
+.departments-inner-container {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2%;
+  margin-top: 10%;
+}
+
+.departments-card {
+  background-color: rgb(195, 195, 195);
+  width: 300px;
+  height: 200px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  box-shadow: 1px 1px 1px 1px rgba(1, 0, 0, 0.3);
+}
