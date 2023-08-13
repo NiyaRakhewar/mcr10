@@ -29,4 +29,9 @@
   justify-content: center;
   border-radius: 1rem;
   box-shadow: 1px 1px 1px 1px rgba(1, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.departments-card:hover {
+  transform: scale(1.1);
 }
