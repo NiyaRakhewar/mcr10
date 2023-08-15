@@ -1,46 +1,54 @@
 import React, { useContext, useState } from "react";
 import "./product.css";
 import { ProductContext } from "../../Context/ProductContext";
+import { useNavigate } from "react-router-dom";
 export const Products = () => {
+  const navigate = useNavigate();
   const { state } = useContext(ProductContext);
 
-  const [data, setData] = useState([...state.products]);
+  const [dept, setDept] = useState(state.currentDept);
+
+  const [check, setCheck] = useState(false);
+
+  const [sort, setSort] = useState("Name");
+
+  console.log("currdept", state.currentDept);
 
   const changeHandler = (value) => {
     console.log("clicked", value);
-    const filteredData =
-      value === "All Departments"
-        ? [...state.products]
-        : [...state.products].filter(({ department }) => department === value);
-    setData(filteredData);
+
+    setDept(value);
   };
+
+  const filteredData =
+    dept === "All Departments"
+      ? state.products
+      : state.products.filter(({ department }) => department === dept);
 
   const clickCheckboxHandler = (e) => {
     const isChecked = e.target.checked;
 
-    const filteredData = isChecked
-      ? [...state.products].filter(({ stock }) => stock <= 10)
-      : [...state.products];
-
-    setData(filteredData);
+    setCheck(isChecked);
   };
+
+  const filteredCheckedData = check
+    ? filteredData.filter(({ stock }) => stock <= 10)
+    : filteredData;
 
   const changeHandlerByOption = (value) => {
     // const type = value.toLowerCase();
-    const filteredData =
-      value === "Name"
-        ? [...state.products].sort((a, b) => {
-            let nameA = a.name;
-            let nameB = b.name;
-            return nameA - nameB;
-          })
-        : [...state.products].sort((a, b) => {
-            let typeA = a.type;
-            let typeB = b.type;
-            return typeA - typeB;
-          });
-    setData(filteredData);
+
+    setSort(value);
   };
+
+  const filteredSortBy =
+    sort === "Name"
+      ? [...filteredCheckedData].sort((a, b) => a.name.localeCompare(b.name))
+      : sort === "Price"
+      ? [...filteredCheckedData].sort((a, b) => a.price - b.price)
+      : sort === "Stock" &&
+        [...filteredCheckedData].sort((a, b) => a.stock - b.stock);
+
   const departmentArray = state.products.map(({ department }) => department);
   const departments = [...new Set(departmentArray)];
 
@@ -56,7 +64,17 @@ export const Products = () => {
               onChange={(e) => changeHandler(e.target.value)}
               className="dept-dropdown-container"
             >
-              <option>All Departments</option>
+              {state.currentDept ? (
+                <option>{state.currentDept}</option>
+              ) : (
+                <option>All Departments</option>
+              )}
+              {!state.currentDept ? (
+                <option>{state.currentDept}</option>
+              ) : (
+                <option>All Departments</option>
+              )}
+
               {departments?.map((dept) => (
                 <option>{dept}</option>
               ))}
@@ -73,7 +91,12 @@ export const Products = () => {
               <option>Price</option>
               <option>Stock</option>
             </select>
-            <button className="new-btn">New</button>
+            <button
+              className="new-btn"
+              onClick={() => navigate("/products/newproduct")}
+            >
+              New
+            </button>
           </div>
           <div className="products-container">
             <table>
@@ -85,13 +108,18 @@ export const Products = () => {
                 <th className="th-stock">Stock</th>
                 <th className="th-supplier">Supplier</th>
               </tr>
-              {data?.map((product, key) => {
+              {filteredSortBy?.map((product, key) => {
                 return (
                   <tr key={key}>
                     <td className="td-img">
                       <img src={product.imageUrl} alt="" />
                     </td>
-                    <td className="td-name">{product.name}</td>
+                    <td
+                      className="td-name"
+                      onClick={() => navigate(`/products/${product.id}`)}
+                    >
+                      {product.name}
+                    </td>
                     <td className="td-desc">{product.description}</td>
                     <td className="td-price">{product.price}</td>
                     <td className="td-stock">{product.stock}</td>

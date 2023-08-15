@@ -85,6 +85,9 @@ td {
   padding: 2%;
 }
 .td-name {
+  cursor: pointer;
+  text-decoration: underline;
+  color: blue;
   text-align: left;
   width: 200px;
   height: 100px;
